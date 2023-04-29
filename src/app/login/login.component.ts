@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { LoginUser } from "../shared/login-user";
+import { UserService } from "../services/user.service";
+import { Router } from "@angular/router";
+import { Constants } from "../constants";
+import { User } from "../shared/user";
 
 @Component({
   selector: "app-login",
@@ -7,13 +10,13 @@ import { LoginUser } from "../shared/login-user";
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
-  loginUser = new LoginUser();
+  public user = new User();
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {}
 
   onSubmit() {
-    console.log(this.loginUser);
+    this.userService.validateUser(this.user);
   }
 }

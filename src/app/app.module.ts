@@ -12,9 +12,10 @@ import { RegisterComponent } from "./register/register.component";
 import { AppRoutingModule } from "./app-routing.module";
 
 import { UserService } from "./services/user.service";
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, UserDashboardComponent],
   imports: [
     BrowserModule,
     MatFormFieldModule,

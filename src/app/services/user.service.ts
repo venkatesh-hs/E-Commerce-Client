@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from "../shared/user";
+import { Router } from "@angular/router";
+import { Constants } from "../constants";
 
 @Injectable({
   providedIn: "root",
 })
 export class UserService {
   private userUrl: string;
+  private validateUrl: string;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -14,14 +17,37 @@ export class UserService {
     }),
   };
 
-  constructor(private http: HttpClient) {
-    this.userUrl = "http://localhost:8082/api/v1/users";
+  constructor(private http: HttpClient, private router: Router) {
+    this.userUrl = Constants.USERS_API;
   }
 
   public setUser(user: User) {
-    this.http.post(this.userUrl, user, this.httpOptions).subscribe((res) => {
-      console.log(res);
-    });
+    this.http.post(this.userUrl, user, this.httpOptions).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err.message);
+      }
+    );
+    this.redirectToLogin();
+  }
+  redirectToLogin() {
+    this.router.navigate([Constants.REDIRECT_LOGIN]);
+  }
+
+  public validateUser(user: User) {
+    this.validateUrl = this.userUrl + Constants.USERS_VALIDATE;
+    console.log(this.validateUrl);
+    this.http
+      .post(this.validateUrl, user, this.httpOptions)
+      .subscribe((res) => {
+        console.log(res);
+      });
+    this.redirectToUserDashboard();
+  }
+  redirectToUserDashboard() {
+    this.router.navigate([Constants.REDIRECT_USER_DASHBOARD]);
   }
 
   public getUsers() {
