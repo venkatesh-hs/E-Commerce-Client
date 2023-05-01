@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../services/user.service";
-import { Router } from "@angular/router";
-import { Constants } from "../constants";
 import { User } from "../shared/user";
 
 @Component({
@@ -11,10 +9,15 @@ import { User } from "../shared/user";
 })
 export class LoginComponent implements OnInit {
   public user = new User();
+  private errorMessage: string = null;
 
   constructor(private userService: UserService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.error.subscribe((message) => {
+      this.errorMessage = message;
+    });
+  }
 
   onSubmit() {
     this.userService.validateUser(this.user);

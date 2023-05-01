@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from "../shared/user";
 import { Router } from "@angular/router";
 import { Constants } from "../constants";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -10,6 +11,7 @@ import { Constants } from "../constants";
 export class UserService {
   private userUrl: string;
   private validateUrl: string;
+  public error = new Subject<string>();
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -39,19 +41,18 @@ export class UserService {
   public validateUser(user: User) {
     this.validateUrl = this.userUrl + Constants.USERS_VALIDATE;
     console.log(this.validateUrl);
-    this.http
-      .post(this.validateUrl, user, this.httpOptions)
-      .subscribe((res) => {
-        console.log(res);
-      });
-    this.redirectToUserDashboard();
+    this.http.post(this.validateUrl, user, this.httpOptions).subscribe(
+      (res) => {
+        if (res != null) {
+          this.redirectToUserDashboard();
+        }
+      },
+      (err) => {
+        this.error.next(err.message);
+      }
+    );
   }
   redirectToUserDashboard() {
     this.router.navigate([Constants.REDIRECT_USER_DASHBOARD]);
-  }
-
-  public getUsers() {
-    const users = this.http.get(this.userUrl).toPromise;
-    console.log(users);
   }
 }
