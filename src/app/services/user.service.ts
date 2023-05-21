@@ -41,10 +41,11 @@ export class UserService {
   public validateUser(user: User) {
     this.validateUrl = this.userUrl + Constants.USERS_VALIDATE;
     console.log(this.validateUrl);
-    this.http.post(this.validateUrl, user, this.httpOptions).subscribe(
+    this.http.post<User>(this.validateUrl, user, this.httpOptions).subscribe(
       (res) => {
         if (res != null) {
-          this.redirectToUserDashboard();
+          const user = res;
+          this.redirectToUserDashboard(user.id);
         }
       },
       (err) => {
@@ -52,7 +53,7 @@ export class UserService {
       }
     );
   }
-  redirectToUserDashboard() {
-    this.router.navigate([Constants.REDIRECT_USER_DASHBOARD]);
+  redirectToUserDashboard(id: string) {
+    this.router.navigate([Constants.REDIRECT_USER_DASHBOARD, id]);
   }
 }

@@ -52,7 +52,11 @@
             <div class="price mt-1">Rs. {{ book.price }}</div>
           </figcaption>
         </div>
-        <button type="button" class="btn btn-primary btn-sm">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          (click)="addToCart(book.id)"
+        >
           Add to cart
         </button>
       </div>
