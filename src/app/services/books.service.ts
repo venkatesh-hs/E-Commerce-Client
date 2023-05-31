@@ -1,12 +1,12 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
-import { map } from "rxjs/operators";
-import { Book } from "../shared/book";
-import { Constants } from "../constants";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Book} from '../shared/book';
+import {Constants} from '../constants';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class BooksService {
   private booksUrl: string;
@@ -15,7 +15,7 @@ export class BooksService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     }),
   };
 

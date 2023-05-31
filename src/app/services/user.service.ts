@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { User } from "../shared/user";
-import { Router } from "@angular/router";
-import { Constants } from "../constants";
-import { Subject } from "rxjs";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {User} from '../shared/user';
+import {Router} from '@angular/router';
+import {Constants} from '../constants';
+import {Subject} from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class UserService {
   private userUrl: string;
@@ -15,7 +15,7 @@ export class UserService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     }),
   };
 
@@ -34,6 +34,7 @@ export class UserService {
     );
     this.redirectToLogin();
   }
+
   redirectToLogin() {
     this.router.navigate([Constants.REDIRECT_LOGIN]);
   }
@@ -44,8 +45,7 @@ export class UserService {
     this.http.post<User>(this.validateUrl, user, this.httpOptions).subscribe(
       (res) => {
         if (res != null) {
-          const user = res;
-          this.redirectToUserDashboard(user.id);
+          this.redirectToUserDashboard(res.id);
         }
       },
       (err) => {
@@ -53,6 +53,7 @@ export class UserService {
       }
     );
   }
+
   redirectToUserDashboard(id: string) {
     this.router.navigate([Constants.REDIRECT_USER_DASHBOARD, id]);
   }

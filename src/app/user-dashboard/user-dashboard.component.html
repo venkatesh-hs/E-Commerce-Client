@@ -32,7 +32,7 @@
           href="#home"
           routerLink="/dashboard"
           routerLinkActive="active"
-          >Home</a
+        >Home</a
         >
       </li>
       <li><a href="#news">Cart</a></li>
@@ -45,7 +45,7 @@
       <div class="col-md-3" *ngFor="let book of books">
         <div class="card card-product-grid">
           <a class="img-wrap">
-            <img height="175px" src="{{ book.imagePath }}" />
+            <img height="175px" src="{{ book.imagePath }}"/>
           </a>
           <figcaption class="info-wrap">
             <a class="title">{{ book.title | uppercase }}</a>
