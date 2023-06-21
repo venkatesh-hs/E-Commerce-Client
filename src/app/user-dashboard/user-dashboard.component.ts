@@ -2,12 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BooksService} from '../services/books.service';
 import {Book} from '../shared/book';
 import {Subscription} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-import {Cart} from '../shared/cart';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CartItem} from '../shared/CartItem';
 import {CartService} from '../services/cart.service';
+import {Constants} from '../constants';
 
 function prepareCartModel(bookId: number, userId: number) {
-  return new Cart(userId, bookId);
+  return new CartItem(userId, bookId);
 }
 
 @Component({
@@ -24,7 +25,8 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private bookService: BooksService,
     private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) {
   }
 
@@ -43,5 +45,13 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.bookSub.unsubscribe();
+  }
+
+  redirectToUserCart() {
+    this.router.navigate([Constants.REDIRECT_USER_CART, this.userId]);
+  }
+
+  redirectToDashboard() {
+    this.router.navigate([Constants.REDIRECT_USER_DASHBOARD, this.userId]);
   }
 }

@@ -22,20 +22,23 @@
       }
 
       li a:hover {
-        background-color: #111;
+        background-color: darkgrey;
       }
     </style>
     <ul>
       <li>
         <a
           class="active"
-          href="#home"
-          routerLink="/dashboard"
-          routerLinkActive="active"
+          (click)="redirectToDashboard()"
         >Home</a
         >
       </li>
-      <li><a href="#news">Cart</a></li>
+      <li>
+        <a
+          (click)="redirectToUserCart()"
+        >cart</a
+        >
+      </li>
     </ul>
   </div>
 </div>

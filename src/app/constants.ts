@@ -8,4 +8,5 @@ export class Constants {
   public static BOOKS_API = 'http://localhost:8082/api/v1/books';
 
   public static CART_API = 'http://localhost:8082/api/v1/cart';
+  public static REDIRECT_USER_CART = '/cart';
 }

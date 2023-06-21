@@ -20,6 +20,7 @@ import {AppRoutingModule} from './app-routing.module';
 
 import {UserService} from './services/user.service';
 import {UserDashboardComponent} from './user-dashboard/user-dashboard.component';
+import {CartComponent} from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {UserDashboardComponent} from './user-dashboard/user-dashboard.component'
     LoginComponent,
     RegisterComponent,
     UserDashboardComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

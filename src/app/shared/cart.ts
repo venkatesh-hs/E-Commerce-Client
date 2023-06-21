@@ -1,10 +1,6 @@
-export class Cart {
-  id: number;
-  userId: number;
-  bookId: number;
+import {Book} from './book';
 
-  constructor(userId: number, bookId: number) {
-    this.userId = userId;
-    this.bookId = bookId;
-  }
+export class Cart {
+  totalPrice: number;
+  books: Array<Book>;
 }
