@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Constants} from '../constants';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {CartItem} from '../shared/cartItem';
-import {Cart} from '../shared/cart';
-import {Subject} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Constants } from "../constants";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { CartItem } from "../shared/CartItem";
+import { Cart } from "../shared/cart";
+import { Subject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CartService {
   private cartUrl: string;
@@ -19,24 +19,24 @@ export class CartService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     }),
   };
 
   addToCart(cartItem: CartItem) {
-    this.http.post(this.cartUrl, cartItem, this.httpOptions).subscribe(
-      (cartRes: CartItem) => {
+    this.http
+      .post(this.cartUrl, cartItem, this.httpOptions)
+      .subscribe((cartRes: CartItem) => {
         console.log(cartRes);
-      }
-    );
+      });
   }
 
   getUserCart(userId: Number) {
-    this.http.get(this.cartUrl + '/' + userId, this.httpOptions).subscribe(
-      (cart: Cart) => {
+    this.http
+      .get(this.cartUrl + "/" + userId, this.httpOptions)
+      .subscribe((cart: Cart) => {
         console.log(cart);
         this.cart.next(cart);
-      }
-    );
+      });
   }
 }
