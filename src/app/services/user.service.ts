@@ -1,21 +1,22 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {User} from '../shared/user';
-import {Router} from '@angular/router';
-import {Constants} from '../constants';
-import {Subject} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { User } from "../shared/user";
+import { Router } from "@angular/router";
+import { Constants } from "../constants";
+import { Subject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class UserService {
   private userUrl: string;
-  private validateUrl: string;
+  private authenticateUrl: string;
   public error = new Subject<string>();
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     }),
   };
 
@@ -39,13 +40,18 @@ export class UserService {
     this.router.navigate([Constants.REDIRECT_LOGIN]);
   }
 
-  public validateUser(user: User) {
-    this.validateUrl = this.userUrl + Constants.USERS_VALIDATE;
-    console.log(this.validateUrl);
-    this.http.post<User>(this.validateUrl, user, this.httpOptions).subscribe(
+  public authenticateUser(user: User) {
+    this.authenticateUrl = this.userUrl + Constants.USERS_AUTHENTICATE;
+    console.log(this.authenticateUrl);
+    this.http.post<any>(this.authenticateUrl, user, this.httpOptions).subscribe(
       (res) => {
         if (res != null) {
-          this.redirectToUserDashboard(res.id);
+          console.log(res);
+          let userId = res.user.id;
+          let token = res.token;
+          sessionStorage.setItem(userId, token);
+          console.log("sessionStorage data: " + sessionStorage.getItem(userId));
+          this.redirectToUserDashboard(userId);
         }
       },
       (err) => {
