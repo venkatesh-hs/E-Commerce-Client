@@ -1,31 +1,25 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {Book} from '../shared/book';
-import {Constants} from '../constants';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
+import { map } from "rxjs/operators";
+import { Book } from "../shared/book";
+import { Constants } from "../constants";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class BooksService {
   private booksUrl: string;
   private booksToDisplay: Book[];
   public books = new Subject<Book[]>();
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
-
   constructor(private http: HttpClient) {
     this.booksUrl = Constants.BOOKS_API;
   }
 
-  getBooks() {
+  getBooks(userId: number) {
     return this.http
-      .get(this.booksUrl, this.httpOptions)
+      .get(this.booksUrl, setHttpOptions(<string>(<undefined>userId)))
       .pipe(
         map((res) => {
           const books = [];
@@ -39,4 +33,14 @@ export class BooksService {
         this.books.next(this.booksToDisplay);
       });
   }
+}
+
+function setHttpOptions(userId: string) {
+  return {
+    headers: new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization:
+        "bearer " + sessionStorage.getItem(<string>(<undefined>userId)),
+    }),
+  };
 }

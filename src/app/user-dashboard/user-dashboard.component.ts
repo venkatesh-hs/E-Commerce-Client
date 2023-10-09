@@ -31,7 +31,8 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userId = this.route.snapshot.params["id"];
-    this.bookService.getBooks();
+    console.log(sessionStorage.getItem(<string>(<undefined>this.userId)));
+    this.bookService.getBooks(this.userId);
     this.bookSub = this.bookService.books.subscribe((books) => {
       this.books = books;
     });

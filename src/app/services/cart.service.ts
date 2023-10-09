@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Constants } from "../constants";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { CartItem } from "../shared/CartItem";
+import { CartItem } from "../shared/cartItem";
 import { Cart } from "../shared/cart";
 import { Subject } from "rxjs";
 
@@ -25,7 +25,11 @@ export class CartService {
 
   addToCart(cartItem: CartItem) {
     this.http
-      .post(this.cartUrl, cartItem, this.httpOptions)
+      .post(
+        this.cartUrl,
+        cartItem,
+        setHttpOptions(<string>(<undefined>cartItem.userId))
+      )
       .subscribe((cartRes: CartItem) => {
         console.log(cartRes);
       });
@@ -33,10 +37,23 @@ export class CartService {
 
   getUserCart(userId: Number) {
     this.http
-      .get(this.cartUrl + "/" + userId, this.httpOptions)
+      .get(
+        this.cartUrl + "/" + userId,
+        setHttpOptions(<string>(<undefined>userId))
+      )
       .subscribe((cart: Cart) => {
         console.log(cart);
         this.cart.next(cart);
       });
   }
+}
+
+function setHttpOptions(userId: string) {
+  return {
+    headers: new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization:
+        "bearer " + sessionStorage.getItem(<string>(<undefined>userId)),
+    }),
+  };
 }
