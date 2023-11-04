@@ -27,17 +27,10 @@
     </style>
     <ul>
       <li>
-        <a
-          class="active"
-          (click)="redirectToDashboard()"
-        >Home</a
-        >
+        <a class="active" (click)="redirectToDashboard()">Home</a>
       </li>
       <li>
-        <a
-          (click)="redirectToUserCart()"
-        >cart</a
-        >
+        <a (click)="redirectToUserCart()">cart</a>
       </li>
     </ul>
   </div>
@@ -48,20 +41,16 @@
       <div class="col-md-3" *ngFor="let book of books">
         <div class="card card-product-grid">
           <a class="img-wrap">
-            <img height="175px" src="{{ book.imagePath }}"/>
+            <img height="175px" src="{{ book.imagePath }}" />
           </a>
           <figcaption class="info-wrap">
             <a class="title">{{ book.title | uppercase }}</a>
             <div class="price mt-1">Rs. {{ book.price }}</div>
           </figcaption>
+          <button mat-mini-fab (click)="addToCart(book.id)">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
-        <button
-          type="button"
-          class="btn btn-primary btn-sm"
-          (click)="addToCart(book.id)"
-        >
-          Add to cart
-        </button>
       </div>
     </div>
   </div>

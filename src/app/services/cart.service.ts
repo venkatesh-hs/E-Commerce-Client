@@ -46,6 +46,19 @@ export class CartService {
         this.cart.next(cart);
       });
   }
+
+  removeFromCart(bookId: number, userId: number) {
+    this.http
+      .patch(
+        this.cartUrl + "/" + userId + "/remove/" + bookId,
+        null,
+        setHttpOptions(<string>(<undefined>userId))
+      )
+      .subscribe((cart: Cart) => {
+        console.log(cart);
+        this.cart.next(cart); 
+      });
+  }
 }
 
 function setHttpOptions(userId: string) {

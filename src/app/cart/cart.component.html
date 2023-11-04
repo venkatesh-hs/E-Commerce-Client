@@ -1,21 +1,61 @@
 <section class="h-100 gradient-custom">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <style>
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #333;
+        }
+
+        li {
+          float: left;
+        }
+
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+
+        li a:hover {
+          background-color: darkgrey;
+        }
+      </style>
+      <ul>
+        <li>
+          <a class="active" (click)="redirectToDashboard()">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="container py-5">
     <div class="row d-flex justify-content-center my-4">
       <div class="col-md-8">
         <div class="card mb-4">
-          <div class="card-header py-3">
-            <h5 class="mb-0">Cart</h5>
-          </div>
           <div class="card-body" *ngFor="let book of cart.books">
             <!-- Single item -->
             <div class="row">
               <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                 <!-- Image -->
-                <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                  <img src="{{ book.imagePath }}"
-                       class="w-100" alt="Blue Jeans Jacket" />
+                <div
+                  class="bg-image hover-overlay hover-zoom ripple rounded"
+                  data-mdb-ripple-color="light"
+                >
+                  <img
+                    src="{{ book.imagePath }}"
+                    class="w-100"
+                    alt="Blue Jeans Jacket"
+                  />
                   <a href="#!">
-                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    <div
+                      class="mask"
+                      style="background-color: rgba(251, 251, 251, 0.2)"
+                    ></div>
                   </a>
                 </div>
                 <!-- Image -->
@@ -23,7 +63,9 @@
 
               <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                 <!-- Data -->
-                <p><strong>{{ book.title }}</strong></p>
+                <p>
+                  <strong>{{ book.title }}</strong>
+                </p>
                 <!-- Data -->
               </div>
 
@@ -31,6 +73,10 @@
                 <!-- Price -->
                 <p class="text-start text-md-center">
                   <strong>Rs. {{ book.price }}</strong>
+                  &nbsp; &nbsp;
+                  <button mat-mini-fab (click)="removeFromCart(book.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
                 </p>
                 <!-- Price -->
               </div>
@@ -41,15 +87,26 @@
         <div class="card mb-4 mb-lg-0">
           <div class="card-body">
             <p><strong>We accept</strong></p>
-            <img class="me-2" width="45px"
-                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                 alt="Visa" />
-            <img class="me-2" width="45px"
-                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                 alt="American Express" />
-            <img class="me-2" width="45px"
-                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                 alt="Mastercard" />
+            <img
+              class="me-2"
+              width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+              alt="Visa"
+            />
+            &nbsp;
+            <img
+              class="me-2"
+              width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+              alt="American Express"
+            />
+            &nbsp;
+            <img
+              class="me-2"
+              width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+              alt="Mastercard"
+            />
           </div>
         </div>
       </div>
@@ -61,27 +118,33 @@
           <div class="card-body">
             <ul class="list-group list-group-flush">
               <li
-                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+              >
                 Products
-                <span>Rs. {{cart.totalPrice}}</span>
+                <span>Rs. {{ cart.totalPrice }}</span>
               </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center px-0"
+              >
                 Shipping
                 <span>Amazon</span>
               </li>
               <li
-                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3"
+              >
                 <div>
                   <strong>Total amount</strong>
                   <strong>
                     <p class="mb-0">(including VAT)</p>
                   </strong>
                 </div>
-                <span><strong>Rs. {{cart.totalPrice}}</strong></span>
+                <span
+                  ><strong>Rs. {{ cart.totalPrice }}</strong></span
+                >
               </li>
             </ul>
 
-            <button type="button" class="btn btn-primary btn-lg btn-block" >
+            <button type="button" class="btn btn-primary btn-lg btn-block">
               Place Order
             </button>
           </div>

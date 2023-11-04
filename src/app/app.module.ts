@@ -12,6 +12,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatIconModule } from "@angular/material";
 
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
@@ -45,6 +46,7 @@ import { CartComponent } from "./cart/cart.component";
     MatButtonModule,
     MatDialogModule,
     MatGridListModule,
+    MatIconModule,
   ],
   providers: [UserService],
   bootstrap: [AppComponent],
