@@ -4,6 +4,7 @@ import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Book } from "../shared/book";
 import { Constants } from "../constants";
+import { CartService } from "./cart.service";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +19,7 @@ export class BooksService {
   }
 
   getBooks(userId: number) {
-    return this.http
+    this.http
       .get(this.booksUrl, setHttpOptions(<string>(<undefined>userId)))
       .pipe(
         map((res) => {

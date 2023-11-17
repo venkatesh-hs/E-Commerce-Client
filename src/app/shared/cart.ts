@@ -1,6 +1,6 @@
-import {Book} from './book';
+import { BookItem } from "./bookItem";
 
 export class Cart {
   totalPrice: number;
-  books: Array<Book>;
+  bookItems: Array<BookItem>;
 }

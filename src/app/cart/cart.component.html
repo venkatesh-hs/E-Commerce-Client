@@ -1,43 +1,53 @@
-<section class="h-100 gradient-custom">
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <style>
-        ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-          background-color: #333;
-        }
-
-        li {
-          float: left;
-        }
-
-        li a {
-          display: block;
-          color: white;
-          text-align: center;
-          padding: 14px 16px;
-          text-decoration: none;
-        }
-
-        li a:hover {
-          background-color: darkgrey;
-        }
-      </style>
-      <ul>
-        <li>
-          <a class="active" (click)="redirectToDashboard()">Home</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+<p>
+  <mat-toolbar color="primary">
+    <mat-icon>hive</mat-icon>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button
+      mat-raised-button
+      mat-icon-button
+      matTooltip="Home"
+      matTooltipPosition="below"
+      class="example-icon"
+      class="button"
+      (click)="redirectToDashboard()"
+    >
+      <mat-icon>home</mat-icon>
+    </button>
+    <span class="example-spacer"></span>
+    <button
+      mat-raised-button
+      mat-icon-button
+      matTooltip="Home"
+      matTooltipPosition="below"
+      class="example-icon"
+      class="button"
+      (click)="redirectToUserCart()"
+    >
+      <mat-icon>shopping_bag</mat-icon>
+      <span
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+      >
+        {{ cartCount }}
+      </span>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button
+      matTooltip="logout"
+      matTooltipPosition="below"
+      mat-icon-button
+      class="example-icon"
+      (click)="redirectToUserCart()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+<section>
   <div class="container py-5">
     <div class="row d-flex justify-content-center my-4">
       <div class="col-md-8">
         <div class="card mb-4">
-          <div class="card-body" *ngFor="let book of cart.books">
+          <div class="card-body" *ngFor="let book of cart.bookItems">
             <!-- Single item -->
             <div class="row">
               <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
@@ -73,6 +83,8 @@
                 <!-- Price -->
                 <p class="text-start text-md-center">
                   <strong>Rs. {{ book.price }}</strong>
+                  &nbsp; &nbsp;
+                  <strong>Qty. {{ book.quantity }}</strong>
                   &nbsp; &nbsp;
                   <button mat-mini-fab (click)="removeFromCart(book.id)">
                     <mat-icon>delete</mat-icon>

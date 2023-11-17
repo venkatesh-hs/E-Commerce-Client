@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { CartItem } from "../shared/cartItem";
 import { Cart } from "../shared/cart";
 import { Subject } from "rxjs";
+import { forEach } from "@angular/router/src/utils/collection";
 
 @Injectable({
   providedIn: "root",
@@ -12,6 +13,7 @@ import { Subject } from "rxjs";
 export class CartService {
   private cartUrl: string;
   cart = new Subject<Cart>();
+  cartItemCount = new Subject<number>();
 
   constructor(private http: HttpClient, private router: Router) {
     this.cartUrl = Constants.CART_API;
@@ -30,8 +32,9 @@ export class CartService {
         cartItem,
         setHttpOptions(<string>(<undefined>cartItem.userId))
       )
-      .subscribe((cartRes: CartItem) => {
-        console.log(cartRes);
+      .subscribe((cart: Cart) => {
+        console.log("Inside add to cart service : ", cart);
+        this.cartItemCount.next(calculateCartItemCount(cart));
       });
   }
 
@@ -44,6 +47,7 @@ export class CartService {
       .subscribe((cart: Cart) => {
         console.log(cart);
         this.cart.next(cart);
+        this.cartItemCount.next(calculateCartItemCount(cart));
       });
   }
 
@@ -56,7 +60,8 @@ export class CartService {
       )
       .subscribe((cart: Cart) => {
         console.log(cart);
-        this.cart.next(cart); 
+        this.cart.next(cart);
+        this.cartItemCount.next(calculateCartItemCount(cart));
       });
   }
 }
@@ -69,4 +74,12 @@ function setHttpOptions(userId: string) {
         "bearer " + sessionStorage.getItem(<string>(<undefined>userId)),
     }),
   };
+}
+
+function calculateCartItemCount(cart: Cart) {
+  let count: number = 0;
+  for (var bookItem of cart.bookItems) {
+    count += bookItem.quantity;
+  }
+  return count;
 }

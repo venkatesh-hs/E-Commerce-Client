@@ -20,6 +20,8 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   private bookSub = new Subscription();
   books = new Array<Book>();
   userId: number;
+  cartCountSub = new Subscription();
+  cartCount: number;
 
   // clicked = false; (Implementation of disabling the button on adding the book to cart)
   constructor(
@@ -31,10 +33,15 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userId = this.route.snapshot.params["id"];
-    console.log(sessionStorage.getItem(<string>(<undefined>this.userId)));
     this.bookService.getBooks(this.userId);
+    this.cartService.getUserCart(this.userId);
     this.bookSub = this.bookService.books.subscribe((books) => {
+      console.log("Inside book subscription");
       this.books = books;
+    });
+    this.cartCountSub = this.cartService.cartItemCount.subscribe((count) => {
+      console.log("Inside cart subscriber --> count :", count);
+      this.cartCount = count;
     });
   }
 
@@ -45,6 +52,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.bookSub.unsubscribe();
+    this.cartCountSub.unsubscribe();
   }
 
   redirectToUserCart() {

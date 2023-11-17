@@ -12,7 +12,8 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
-import { MatIconModule } from "@angular/material";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
@@ -22,6 +23,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { UserService } from "./services/user.service";
 import { UserDashboardComponent } from "./user-dashboard/user-dashboard.component";
 import { CartComponent } from "./cart/cart.component";
+import "hammerjs";
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { CartComponent } from "./cart/cart.component";
     MatDialogModule,
     MatGridListModule,
     MatIconModule,
+    MatTooltipModule,
   ],
   providers: [UserService],
   bootstrap: [AppComponent],

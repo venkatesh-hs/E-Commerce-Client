@@ -4,6 +4,7 @@ import { CartService } from "../services/cart.service";
 import { Subscription } from "rxjs";
 import { Cart } from "../shared/cart";
 import { Constants } from "../constants";
+import { C } from "@angular/core/src/render3";
 
 @Component({
   selector: "app-cart",
@@ -13,7 +14,9 @@ import { Constants } from "../constants";
 export class CartComponent implements OnInit, OnDestroy {
   private userId: number;
   cartSub = new Subscription();
+  cartCountSub = new Subscription();
   cart = new Cart();
+  cartCount: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,10 +31,15 @@ export class CartComponent implements OnInit, OnDestroy {
       console.log("Inside cart subscriber :", cart);
       this.cart = cart;
     });
+    this.cartService.cartItemCount.subscribe((count) => {
+      console.log("Inside cart subscriber --> count :", count);
+      this.cartCount = count;
+    });
   }
 
   ngOnDestroy(): void {
     this.cartSub.unsubscribe();
+    this.cartCountSub.unsubscribe();
   }
 
   redirectToDashboard() {
