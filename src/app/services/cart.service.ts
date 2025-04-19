@@ -1,14 +1,13 @@
-import { Injectable } from "@angular/core";
-import { Constants } from "../constants";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { CartItem } from "../shared/cartItem";
-import { Cart } from "../shared/cart";
-import { Subject } from "rxjs";
-import { forEach } from "@angular/router/src/utils/collection";
+import { Injectable } from '@angular/core';
+import { Constants } from '../constants';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { CartItem } from '../shared/cartItem';
+import { Cart } from '../shared/cart';
+import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CartService {
   private cartUrl: string;
@@ -21,7 +20,7 @@ export class CartService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     }),
   };
 
@@ -33,7 +32,7 @@ export class CartService {
         setHttpOptions(<string>(<undefined>cartItem.userId))
       )
       .subscribe((cart: Cart) => {
-        console.log("Inside add to cart service : ", cart);
+        console.log('Inside add to cart service : ', cart);
         this.cartItemCount.next(calculateCartItemCount(cart));
       });
   }
@@ -41,7 +40,7 @@ export class CartService {
   getUserCart(userId: Number) {
     this.http
       .get(
-        this.cartUrl + "/" + userId,
+        this.cartUrl + '/' + userId,
         setHttpOptions(<string>(<undefined>userId))
       )
       .subscribe((cart: Cart) => {
@@ -54,7 +53,7 @@ export class CartService {
   removeFromCart(bookId: number, userId: number) {
     this.http
       .patch(
-        this.cartUrl + "/" + userId + "/remove/" + bookId,
+        this.cartUrl + '/' + userId + '/remove/' + bookId,
         null,
         setHttpOptions(<string>(<undefined>userId))
       )
@@ -69,16 +68,16 @@ export class CartService {
 function setHttpOptions(userId: string) {
   return {
     headers: new HttpHeaders({
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization:
-        "bearer " + sessionStorage.getItem(<string>(<undefined>userId)),
+        'bearer ' + sessionStorage.getItem(<string>(<undefined>userId)),
     }),
   };
 }
 
 function calculateCartItemCount(cart: Cart) {
-  let count: number = 0;
-  for (var bookItem of cart.bookItems) {
+  let count = 0;
+  for (const bookItem of cart.bookItems) {
     count += bookItem.quantity;
   }
   return count;

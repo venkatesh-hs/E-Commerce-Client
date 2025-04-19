@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { User } from "../shared/user";
-import { Router } from "@angular/router";
-import { Constants } from "../constants";
-import { Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../shared/user';
+import { Router } from '@angular/router';
+import { Constants } from '../constants';
+import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class UserService {
   private userUrl: string;
@@ -15,7 +15,7 @@ export class UserService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     }),
   };
 
@@ -40,16 +40,16 @@ export class UserService {
   }
 
   public authenticateUser(user: User) {
-    this.authenticateUrl = this.userUrl + Constants.USERS_AUTHENTICATE;
+    this.authenticateUrl = Constants.USERS_AUTHENTICATE;
     console.log(this.authenticateUrl);
     this.http.post<any>(this.authenticateUrl, user, this.httpOptions).subscribe(
       (res) => {
         if (res != null) {
           console.log(res);
-          let userId = res.user.id;
-          let token = res.token;
+          const userId = res.user.id;
+          const token = res.token;
           sessionStorage.setItem(userId, token);
-          console.log("sessionStorage data: " + sessionStorage.getItem(userId));
+          console.log('sessionStorage data: ' + sessionStorage.getItem(userId));
           this.redirectToUserDashboard(userId);
         }
       },
